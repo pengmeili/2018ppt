@@ -29,7 +29,6 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
-		<script src="js/lrtk.js"></script>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -37,6 +36,12 @@
 	</head>
 
 	<body>
+		<div class="mask-layer">
+			<div class="inner">
+				<p>全屏观看效果更佳哦！</p>
+				<button>我知道了</button>
+			</div>
+		</div>
 
 		<div class="reveal">
 
@@ -129,7 +134,7 @@
 						<h3 class="color">电商业务</h3>
 						<div class="item item1 fragment fade-right">
 							<h5> 发布会 5 场</h5>
-							<p>3月、6月、8月、10月、12月黄5场发布会页面支持</p>
+							<p>3月、6月、8月、10月、12月共5场发布会页面支持</p>
 						</div>
 						<div class="item item2 fragment fade-right">
 							<h5>新品 24+ </h5>
@@ -378,13 +383,13 @@
 			</div>
 
 		</div>
-
+		
+		<script src="js/jquery-2.1.4.min.js"></script>
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
+		<script src="js/lrtk.js"></script>
 
 		<script>
-
-			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				controls: true,
 				progress: true,
@@ -392,8 +397,6 @@
 				center: true,
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
 					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
@@ -405,6 +408,21 @@
 				]
 			});
 
+			var clickflag = $.cookie('clickflag');
+			$(function(){
+				if(clickflag != null){
+					$('.mask-layer').hide();
+				}
+				$('.mask-layer').on('click',function(){
+					$(this).hide();
+					if(clickflag == null){
+						$.cookie('clickflag','true',{expires:10});			
+					}
+				});
+				$(document).keydown(function(event){
+					$('.mask-layer').trigger('click');
+				});
+			})
 		</script>
 
 	</body>
